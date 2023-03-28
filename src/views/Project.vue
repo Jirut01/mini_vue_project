@@ -1,0 +1,75 @@
+<template>
+  <div class="project">
+<h1 class="subheading grey--text">Project</h1>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 sm6 md4 xl4 v-for="project in projects" :key="project.title">
+          <v-card flat class="text-ms-center ma-2 center">
+            <v-responsive>
+              <img
+                :src="project.img"
+                width="300"
+                height="300px"
+                alt=""
+              />
+            </v-responsive>
+            <v-card-text class="subheading ms-text-center"
+              >{{project.title}}</v-card-text
+            >
+            <v-card-actions>
+              <v-btn color="primary">
+                <v-icon left> mdi-message-alert </v-icon>
+                ดูรายละเอียด
+              </v-btn>
+              <v-btn color="success">
+                <v-icon left> mdi-account </v-icon>
+                ทีมที่รับผิดชอบ
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
+</template>
+<script>
+export default {
+    
+  data() {
+    return {
+      projects: [
+        {
+          img: "pexels-designecologist-1287561.jpg",
+          title: "ระบบจองร้านเหล้า",
+        },
+        {
+          img: "pexels-eberhard-grossgasteiger-1284296.jpg",
+          title: "ระบบจองร้านเหล้า.",
+        },
+        {
+          img: "pexels-efdal-yildiz-917494.jpg",
+          title: "ระบบจองร้านเหล้า..",
+        },
+        {
+          img: "pexels-rodnae-productions-8553094.jpg",
+          title: "ระบบจองร้านเหล้า...",
+        },
+        {
+          img: "pexels-simon-berger-1323550.jpg",
+          title: "ระบบจองร้านเหล้า....",
+        },
+        {
+          img: "pexels-simon-berger-1323550.jpg",
+          title: "ระบบจองร้านเหล้า.....",
+        },
+      ],
+      head_ti: "Project"
+    };
+  },
+  components:{
+  }
+};
+</script>
+
+<style>
+</style>

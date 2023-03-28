@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: HomeView
+  // },
   {
     path: '/about',
     name: 'about',
@@ -17,7 +16,49 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+  },
+  {
+    path: "",
+    name: "main",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Main.vue"),
+    children: [
+      {
+        path: '/',
+        name: 'section',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Section.vue"),
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Profile.vue"),
+      },
+      {
+        path: '/calculator',
+        name: 'calculator',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Calculator.vue"),
+      },
+      {
+        path: '/order',
+        name: 'order',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Order.vue"),
+      },
+      {
+        path: '/project',
+        name: 'project',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Project.vue"),
+      },
+      {
+        path: '/team',
+        name: 'team',
+        component: () => import(/* webpackChunkName: "about" */ "../views/Team.vue"),
+      },
+      {
+        path: '/manageproduct',
+        name: 'manageproduct',
+        component: () => import(/* webpackChunkName: "about" */ "../views/ManageProduct.vue"),
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({
