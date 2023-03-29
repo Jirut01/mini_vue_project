@@ -1,10 +1,10 @@
   <template>
-  <v-data-table :headers="headers" :items="items">
-     <template slot="item.action" slot-scope="props">
-      <v-btn @click="doSomething(props.item)">Action</v-btn>
-      <v-btn @click="doSomething2(props.item)">Action2</v-btn>
-    </template>
-  </v-data-table>
+    <v-data-table :headers="headers" :items="items">
+      <template slot="item.action" slot-scope="props">
+        <v-btn @click="doSomething(props.item)">Action</v-btn>
+        <v-btn @click="doSomething2(props.item)">Action2</v-btn>
+      </template>
+    </v-data-table>
 </template>
 
 <script>

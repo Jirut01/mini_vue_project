@@ -1,131 +1,103 @@
 <template>
   <div>
-    <h1 class="subheading grey--text">ออเดอร์</h1>
+    <!-- <h1 class="subheading grey--text">ออเดอร์</h1> -->
     <v-container>
-
-      <v-card class="pa-3" v-for="project in projects" :key="project.tile">
-        <v-layout row wrap class="pa-3">
-          <v-flex xs12 md3>
-            <div class="caption grey--text">ลำดับ</div>
-            <div>{{ project.title }}</div>
-          </v-flex>
-          <v-flex ms6 md3>
-            <div class="caption grey--text">มูลค่า</div>
-            <div>{{ project.team }}</div>
-          </v-flex>
-          <v-flex ms6 md3>
-            <div class="caption grey--text">วันที่</div>
-            <v-chip :class="project.code" close>{{ project.status }}</v-chip>
-          </v-flex>
-          <v-flex ms6 md3>
-            <div class="caption grey--text">รายละเอียด</div>
-            <DialogEdit :data="project.title" :datas="projects"/>
-          </v-flex>
-        </v-layout>
-      </v-card>
-
-       <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="lime"
-            dark
-            v-bind="attrs"
-            v-on="on"
-            @click="sortBy('title')"
-            class="ml-2 mt-2"
-            small
-          >
-            <v-icon>mdi-file-document-multiple-outline</v-icon>
-          </v-btn>
+      <v-data-table
+        :headers="Headers"
+        :items="details"
+        :single-expand="singleExpand"
+        :expanded.sync="expanded"
+        item-key="id"
+        show-expand
+        class="elevation-1"
+      >
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-toolbar-title class="subheading grey--text"
+              >รายการออเดอร์</v-toolbar-title
+            >
+            <v-spacer></v-spacer>
+            <v-switch
+              v-model="singleExpand"
+              label="Single expand"
+              class="mt-2"
+            ></v-switch>
+          </v-toolbar>
         </template>
-        <span>เรียงตามชื่อโปรเจค</span>
-      </v-tooltip>
-
-      <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="warning"
-            dark
-            v-bind="attrs"
-            v-on="on"
-            @click="sortBy('team')"
-            small
-            class="ml-2 mt-2"
-          >
-            <v-icon>mdi-human-capacity-increase</v-icon>
-          </v-btn>
+        <template v-slot:expanded-item="{ headers, item }">
+          <!-- <td :colspan="headers.length">{{ item.details}}</td> -->
+          <td :colspan="headers.length">
+            <v-list-item three-line v-for="(lists, index) in item.details" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{index + 1}}. <i>{{lists.product_name}}</i></v-list-item-title>
+                <v-list-item-subtitle>
+                  ราคา <b>{{format_number(lists.price)}}</b> บาท จำนวน <b>{{format_number(lists.amount)}}</b> ชิ้น
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  <b>รวม {{format_number(lists.price)}} x {{format_number(lists.amount)}} = {{format_number(lists.sum)}} บาท</b>
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </td>
         </template>
-        <span>เรียงตามชื่อทีม</span>
-      </v-tooltip>
-
-      <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="success"
-            dark
-            v-bind="attrs"
-            v-on="on"
-            @click="sortBy('status')"
-            small
-            class="ml-2 mt-2"
-          >
-            <v-icon>mdi-list-status</v-icon>
-          </v-btn>
-        </template>
-        <span>เรียงตามสถานะ</span>
-      </v-tooltip>
-
+      </v-data-table>
     </v-container>
   </div>
 </template>
 
 <script>
-import DialogEdit from "../components/DialogEdit";
 export default {
   data() {
     return {
-      show: true,
-      projects: [
+      getdata: [],
+      expanded: [],
+      singleExpand: false,
+      Headers: [
         {
-          title: "ชำระเงินออนไลน์",
-          team: "ดรีมทีม",
-          status: "สำเร็จ",
-          code: "success",
+          text: "ลำดับ",
+          align: "start",
+          sortable: false,
+          value: "order_no",
         },
-        {
-          title: "ธนาคารเพื่อชาวบ้าน",
-          team: "หมูป่า",
-          status: "กำลังตรวจสอบ",
-          code: "info",
-        },
-        {
-          title: "ระบบจองโต๊ะร้านชาบู",
-          team: "ไทบ้านโปรแกรมเมอร์",
-          status: "กำลังดำเนินการ",
-          code: "warning",
-        },
-        {
-          title: "ระบบจองหอพัก",
-          team: "นักรัก",
-          status: "ล้มเหลว",
-          code: "error",
-        },
-        {
-          title: "ระบบจองร้านเหล้า",
-          team: "นักดื่ม",
-          status: "ล้มเหลว",
-          code: "error",
-        },
+        { text: "id", value: "id", align: " d-none" },
+        { text: "วัน-เวลาที่สั่งซื้อ", value: "date" },
+        { text: "มูลค่าทั้งหมด", value: "amount" },
+        { text: "", value: "data-table-expand" },
       ],
+      details: [],
     };
   },
   methods: {
-    sortBy(prop) {
-      this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+    getData() {
+      this.axios.get("http://localhost:3000/orders").then((response) => {
+        response.data.data.forEach((el, index) => {
+          this.details.push({
+            order_no: index + 1,
+            date: this.convertDate(el.date),
+            amount: el.total,
+            id: el._id,
+            details: el.detail,
+          });
+        });
+        console.log(this.details);
+      });
+    },
+    format_number(number) {
+      const formattedNumber = number.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+      return formattedNumber;
+    },
+    convertDate(date) {
+      var date1 = new Date(date).toLocaleString("en-US", {
+        timeZone: "Asia/Bangkok", hour12:false
+      });
+      return date1;
     },
   },
-  components: {
-    DialogEdit
+  created() {
+    this.getData();
   },
 };
 </script>
