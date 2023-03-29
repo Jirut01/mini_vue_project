@@ -6,7 +6,7 @@
       <v-btn color="success" @click="newItemMode()"
         ><v-icon>mdi-plus-box-multiple-outline</v-icon>เพิ่มสินค้า</v-btn
       >
-      <v-btn color="orange" class="white--text ml-3" @click="getData()"
+      <v-btn color="orange" class="white--text ml-3" @click="actiontest()"
         ><v-icon>mdi-refresh</v-icon></v-btn
       >
       <br />
@@ -39,7 +39,7 @@
 
         <v-col cols="12"> </v-col>
       </v-row>
-      <v-dialog  persistent v-model="dialogedit" max-width="500">
+      <v-dialog persistent v-model="dialogedit" max-width="500">
         <v-card>
           <v-card-title> {{ savemode }} </v-card-title>
           <v-card-text>
@@ -98,7 +98,7 @@
               </v-col>
             </v-row>
 
-            <v-row> 
+            <v-row>
               <v-col cols="12">
                 <v-text-field
                   name="image"
@@ -120,7 +120,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog  persistent v-model="dialogDelete" max-width="500">
+      <v-dialog persistent v-model="dialogDelete" max-width="500">
         <v-card>
           <v-card-title>ลบข้อมูล</v-card-title>
           <v-card-text>
@@ -193,9 +193,14 @@ export default {
       this.datadelete = item;
     },
     getData() {
-      this.axios.get("http://localhost:3000/products").then((response) => {
-        this.apidata = response.data;
-      });
+      this.axios
+        .get("http://localhost:3000/products")
+        .then((response) => {
+          this.apidata = response.data;
+        })
+        .catch((err) => {
+          this.$router.push("/stock");
+        });
     },
     async postData() {
       try {
@@ -275,6 +280,9 @@ export default {
         maximumFractionDigits: 0,
       });
       return formattedNumber;
+    },
+    actiontest() {
+      // this.$router.push('/')      //redirect
     },
   },
 };

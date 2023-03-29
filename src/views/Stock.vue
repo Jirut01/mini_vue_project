@@ -91,13 +91,10 @@ export default {
   },
   methods: {
     doSomething(item) {
-      console.log(item);
       // Do something with the selected item
     },
     doSomething2(item) {
-      console.log(item);
       // Do something with the selected item
-      console.log("ball");
     },
     getData() {
       this.axios.get("http://localhost:3000/products").then((response) => {
@@ -160,7 +157,6 @@ export default {
         alert(data.message);
         this.getData();
         this.$ref.vuetable.reload()
-        console.log(this.getData())
         id.value = 1;
         this.dialog = false;
       } catch (error) {

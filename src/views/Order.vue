@@ -79,7 +79,6 @@ export default {
             details: el.detail,
           });
         });
-        console.log(this.details);
       });
     },
     format_number(number) {

@@ -11,10 +11,10 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
-      <!-- <v-btn href="/" text>
-        <span class="mr-2">History</span>
-        <v-icon>mdi-history</v-icon>
-      </v-btn> -->
+      <v-btn href="/" text>
+        <span class="mr-2">Logout</span>
+        <v-icon>mdi-logout-variant</v-icon>
+      </v-btn>
 
     </v-app-bar>
     <v-navigation-drawer app dark v-model="show">

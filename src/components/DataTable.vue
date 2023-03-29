@@ -25,14 +25,10 @@ export default {
   },
   methods: {
     doSomething(item) {
-      console.log(item);
       // Do something with the selected item
-      console.log('ball');
     },
      doSomething2(item) {
-      console.log(item);
       // Do something with the selected item
-      console.log('ball');
     },
   },
 };

@@ -169,7 +169,6 @@ export default {
 
         this.postdata.total = total
 
-        console.log(this.postdata);
 
       try {
         const { data } = await this.axios.post(
@@ -182,7 +181,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      console.log(items);
     },
   },
   props: ["card", "summaryAll"],
