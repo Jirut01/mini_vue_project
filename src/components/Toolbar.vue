@@ -76,6 +76,11 @@ export default {
           text: "จัดการสินค้า",
           route: "/manageproduct",
         },
+        //  {
+        //   icon: "mdi-database-plus",
+        //   text: "สต๊อก",
+        //   route: "/stock",
+        // },
       ],
     };
   },

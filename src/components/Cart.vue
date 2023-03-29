@@ -149,6 +149,10 @@ export default {
       return formattedNumber;
     },
     async insertOrder(items) {
+      if(items.length == 0){
+        alert('ไม่มีสินค้าในตะกร้า')
+        return false
+      }
     //   this.postdata.detail.push(items);
     var total = 0
     items.forEach(el => {
