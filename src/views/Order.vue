@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     getData() {
+      var token = this.getToken();
       this.axios.get("http://localhost:3000/orders").then((response) => {
         response.data.data.forEach((el, index) => {
           this.details.push({
@@ -93,6 +94,10 @@ export default {
         timeZone: "Asia/Bangkok", hour12:false
       });
       return date1;
+    },
+    getToken() {
+      var user = JSON.parse(localStorage.getItem("users"));
+      return user.token
     },
   },
   created() {

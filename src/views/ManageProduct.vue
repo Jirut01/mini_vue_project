@@ -193,17 +193,23 @@ export default {
       this.datadelete = item;
     },
     getData() {
+       var token = this.getToken();
       this.axios
-        .get("http://localhost:3000/products")
+        .get("http://localhost:3000/products",{ 
+            headers:{
+              auth: token
+            }
+        })
         .then((response) => {
           this.apidata = response.data;
         })
         .catch((err) => {
-          this.$router.push("/stock");
+          // this.$router.push("/stock");
         });
     },
     async postData() {
       try {
+        var token = this.getToken();
         if (
           this.postdata.product_id == "" ||
           this.postdata.product_name == "" ||
@@ -215,7 +221,11 @@ export default {
         }
         const { data } = await this.axios.post(
           "http://localhost:3000/products",
-          this.postdata
+          this.postdata,{ 
+            headers:{
+              auth: token
+            }
+        }
         );
         alert(data.message);
         this.getData();
@@ -237,6 +247,7 @@ export default {
     },
     async putData() {
       try {
+        var token = this.getToken();
         if (
           this.postdata.product_id == "" ||
           this.postdata.product_name == "" ||
@@ -248,7 +259,11 @@ export default {
         }
         const { data } = await this.axios.put(
           "http://localhost:3000/products/" + this.id,
-          this.postdata
+          this.postdata,{ 
+            headers:{
+              auth: token
+            }
+        }
         );
         alert(data.message);
         this.getData();
@@ -262,8 +277,13 @@ export default {
     deleteItem(item) {
       this.id = item._id;
       try {
+        var token = this.getToken();
         this.axios
-          .delete("http://localhost:3000/products/" + this.id)
+          .delete("http://localhost:3000/products/" + this.id,{ 
+            headers:{
+              auth: token
+            }
+        })
           .then((response) => {
             alert(response.data.message);
             this.dialogDelete = false;
@@ -283,6 +303,10 @@ export default {
     },
     actiontest() {
       // this.$router.push('/')      //redirect
+    },
+     getToken() {
+      var user = JSON.parse(localStorage.getItem("users"));
+      return user.token
     },
   },
 };

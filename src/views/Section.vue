@@ -121,7 +121,7 @@ export default {
             img: "",
             product_name: "",
             sum: 0,
-            price: 0
+            price: 0,
           },
         ],
       },
@@ -142,12 +142,18 @@ export default {
       this.cart += 1;
     },
     getData() {
-      this.axios.get("http://localhost:3000/products").then((response) => {
-        this.GetData = response.data;
-      });
+      var token = this.getToken();
+      this.axios
+        .get("http://localhost:3000/products", { 
+            headers:{
+              auth: token
+            }
+        })
+        .then((response) => {
+          this.GetData = response.data;
+        });
     },
     dialogpurchaseAction(i, count) {
-      
       var id = document.getElementById("count" + i);
       var value = id.value;
       var sum = value * count.price;
@@ -174,8 +180,8 @@ export default {
       }
     },
     async postData(product_id, amount) {
+      var token = this.getToken();
       // console.log(product_id);
-      // console.log(amount);
       this.postdata.detail[0].product_id = product_id;
       this.postdata.detail[0].amount = Number(amount);
 
@@ -188,7 +194,11 @@ export default {
       try {
         const { data } = await this.axios.post(
           "http://localhost:3000/orders",
-          this.postdata
+          this.postdata,{ 
+            headers:{
+              auth: token
+            }
+        }
         );
         alert(data.message);
         this.getData();
@@ -266,13 +276,12 @@ export default {
       );
     },
     updateCart(index, val) {
-        this.dataCart[index].sumary = this.dataCart[index].price * val;
-        this.dataCart[index].amount_sell = val;
-        this.summaryAll = this.dataCart.reduce(
-          (dataCart, obj) => dataCart + obj.sumary,
-          0
-        );
-      
+      this.dataCart[index].sumary = this.dataCart[index].price * val;
+      this.dataCart[index].amount_sell = val;
+      this.summaryAll = this.dataCart.reduce(
+        (dataCart, obj) => dataCart + obj.sumary,
+        0
+      );
     },
     sumAll() {
       this.summaryAll = this.dataCart.reduce(
@@ -280,9 +289,13 @@ export default {
         0
       );
     },
-    clearData(){
-      this.dataCart = []
-    }
+    clearData() {
+      this.dataCart = [];
+    },
+    getToken() {
+      var user = JSON.parse(localStorage.getItem("users"));
+      return user.token
+    },
   },
   components: {
     Cart,

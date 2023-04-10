@@ -11,7 +11,7 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
-      <v-btn href="/" text>
+      <v-btn @click="logout()" text>
         <span class="mr-2">Logout</span>
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
@@ -89,6 +89,10 @@ export default {
       // this.cart = EventBus.$emit("addCart");
       // console.log(this.cart);
     },
+    logout(){
+      localStorage.removeItem('users');
+      this.$router.push("/login");
+    }
   },
   props: [""],
   mounted() {
