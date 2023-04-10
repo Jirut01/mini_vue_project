@@ -97,7 +97,12 @@ export default {
       // Do something with the selected item
     },
     getData() {
-      this.axios.get("http://localhost:3000/products").then((response) => {
+      var token = this.getToken();
+      this.axios.get("http://localhost:3000/products", { 
+            headers:{
+              auth: token
+            }
+        }).then((response) => {
         this.productList = response.data.data;
         this.productList.forEach((el) => {
           this.items.push({
@@ -150,18 +155,29 @@ export default {
         type: this.row,
       };
       try {
+        var token = this.getToken();
         const { data } = await this.axios.put(
           "http://localhost:3000/products/stock/" + this.uuid,
-          datas
+          datas,
+          { 
+            headers:{
+              auth: token
+            }
+        }
         )
         alert(data.message);
         this.getData();
+        location.reload();
+        this.dialog = false;
         this.$ref.vuetable.reload()
         id.value = 1;
-        this.dialog = false;
       } catch (error) {
         console.log(error);
       }
+    },
+    getToken() {
+      var user = JSON.parse(localStorage.getItem("users"));
+      return user.token
     },
   },
   created() {

@@ -83,6 +83,7 @@
                   name="price"
                   label="Price"
                   id="price"
+                  type="number"
                   v-model="postdata.price"
                 >
                 </v-text-field>
@@ -92,6 +93,7 @@
                   name="amount"
                   label="Amount"
                   id="amount"
+                  type="number"
                   v-model="postdata.amount"
                 >
                 </v-text-field>

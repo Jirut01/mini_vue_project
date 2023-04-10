@@ -70,7 +70,12 @@ export default {
   methods: {
     getData() {
       var token = this.getToken();
-      this.axios.get("http://localhost:3000/orders").then((response) => {
+      this.axios.get("http://localhost:3000/orders",
+      { 
+            headers:{
+              auth: token
+            }
+        }).then((response) => {
         response.data.data.forEach((el, index) => {
           this.details.push({
             order_no: index + 1,

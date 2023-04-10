@@ -171,9 +171,15 @@ export default {
 
 
       try {
+        var token = this.getToken();
         const { data } = await this.axios.post(
           "http://localhost:3000/orders",
-          this.postdata
+          this.postdata,
+          { 
+            headers:{
+              auth: token
+            }
+        }
         );
         alert(data.message);
         this.dialog = false;
@@ -181,6 +187,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+     getToken() {
+      var user = JSON.parse(localStorage.getItem("users"));
+      return user.token
     },
   },
   props: ["card", "summaryAll"],
