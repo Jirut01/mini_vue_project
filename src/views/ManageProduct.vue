@@ -144,7 +144,6 @@
     </v-container>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -195,12 +194,12 @@ export default {
       this.datadelete = item;
     },
     getData() {
-       var token = this.getToken();
+      var token = this.getToken();
       this.axios
-        .get("http://localhost:3000/products",{ 
-            headers:{
-              auth: token
-            }
+        .get("http://localhost:3000/products", {
+          headers: {
+            auth: token,
+          },
         })
         .then((response) => {
           this.apidata = response.data;
@@ -223,11 +222,12 @@ export default {
         }
         const { data } = await this.axios.post(
           "http://localhost:3000/products",
-          this.postdata,{ 
-            headers:{
-              auth: token
-            }
-        }
+          this.postdata,
+          {
+            headers: {
+              auth: token,
+            },
+          }
         );
         alert(data.message);
         this.getData();
@@ -261,11 +261,12 @@ export default {
         }
         const { data } = await this.axios.put(
           "http://localhost:3000/products/" + this.id,
-          this.postdata,{ 
-            headers:{
-              auth: token
-            }
-        }
+          this.postdata,
+          {
+            headers: {
+              auth: token,
+            },
+          }
         );
         alert(data.message);
         this.getData();
@@ -281,11 +282,11 @@ export default {
       try {
         var token = this.getToken();
         this.axios
-          .delete("http://localhost:3000/products/" + this.id,{ 
-            headers:{
-              auth: token
-            }
-        })
+          .delete("http://localhost:3000/products/" + this.id, {
+            headers: {
+              auth: token,
+            },
+          })
           .then((response) => {
             alert(response.data.message);
             this.dialogDelete = false;
@@ -306,9 +307,9 @@ export default {
     actiontest() {
       // this.$router.push('/')      //redirect
     },
-     getToken() {
+    getToken() {
       var user = JSON.parse(localStorage.getItem("users"));
-      return user.token
+      return user.token;
     },
   },
 };

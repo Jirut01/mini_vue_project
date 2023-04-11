@@ -15,7 +15,7 @@
           <v-toolbar flat>
             <v-toolbar-title class="subheading grey--text"
               >รายการออเดอร์</v-toolbar-title
-            >
+            >&nbsp;(ยอดรวม = {{format_number(total)}} บาท)
             <v-spacer></v-spacer>
             <v-switch
               v-model="singleExpand"
@@ -40,7 +40,7 @@
             </v-list-item>
           </td>
         </template>
-      </v-data-table>
+      </v-data-table><br>
     </v-container>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
       getdata: [],
       expanded: [],
       singleExpand: false,
+      total: 0,
       Headers: [
         {
           text: "ลำดับ",
@@ -84,6 +85,7 @@ export default {
             id: el._id,
             details: el.detail,
           });
+          this.total += el.total
         });
       });
     },

@@ -26,7 +26,7 @@
           />
         </v-avatar>
         <v-list-item-content class="ms-2">
-          <v-list-item-title>Ball 66040</v-list-item-title>
+          <v-list-item-title>{{getUsername}}</v-list-item-title>
           <v-list-item-subtitle>jirutsang.sa@inet.co.th</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -56,6 +56,7 @@ export default {
     return {
       show: true,
       cart: 2,
+      username: '',
       lists: [
         { icon: "mdi-warehouse", text: "รายการสินค้า", route: "/" },
         { icon: "mdi-order-bool-descending", text: "ออเดอร์", route: "/order" },
@@ -91,6 +92,7 @@ export default {
     },
     logout(){
       localStorage.removeItem('users');
+      sessionStorage.setItem("autosave", "ball");
       this.$router.push("/login");
     }
   },
@@ -103,10 +105,10 @@ export default {
   },
   computed: {
     //ประมวณผลแบบเรียลทาม //
-    // cart() {
-    //   var a = 2
-    //   return a
-    // },
+    getUsername() {
+      var name = JSON.parse(localStorage.getItem("users"));
+      return name.username
+    },
   },
   components: {
   }
