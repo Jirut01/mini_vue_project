@@ -93,7 +93,7 @@ export default {
     logout(){
       localStorage.removeItem('users');
       sessionStorage.setItem("autosave", "ball");
-      this.$router.push("/login");
+      this.$router.push("/login2");
     }
   },
   props: [""],

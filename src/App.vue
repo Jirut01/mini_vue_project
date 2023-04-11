@@ -34,11 +34,11 @@ export default {
         .catch((err) => {
           console.log(err);
           console.log("fail");
-          this.$router.push("/login");
+          this.$router.push("/login2");
         });
         
       } catch (error) {
-        this.$router.push("/login");
+        this.$router.push("/login2");
       }
     },
   },
