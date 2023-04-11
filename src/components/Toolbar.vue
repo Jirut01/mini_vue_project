@@ -11,7 +11,7 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
-      <v-btn @click="logout()" text>
+      <v-btn @click="sure = true" text>
         <span class="mr-2">Logout</span>
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
@@ -45,7 +45,39 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
+  
+  <v-dialog
+      v-model="sure"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          ต้องการออกจากระบบ
+        </v-card-title>
+        <v-card-text>Are you sure ?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="sure = false"
+          >
+            CANCLE
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="logout()"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  
   </div>
+
 </template>
 
 <script>
@@ -57,6 +89,7 @@ export default {
       show: true,
       cart: 2,
       username: '',
+      sure: false,
       lists: [
         { icon: "mdi-warehouse", text: "รายการสินค้า", route: "/" },
         { icon: "mdi-order-bool-descending", text: "ออเดอร์", route: "/order" },
@@ -82,6 +115,11 @@ export default {
           text: "สต๊อก",
           route: "/stock",
         },
+        {
+          icon: "mdi-account-edit",
+          text: "แก้ไขข้อมูลส่วนตัว",
+          route: "/profile",
+        },
       ],
     };
   },
@@ -93,6 +131,7 @@ export default {
     logout(){
       localStorage.removeItem('users');
       sessionStorage.setItem("autosave", "ball");
+      this.sure = false
       this.$router.push("/login2");
     }
   },
