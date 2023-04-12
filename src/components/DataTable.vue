@@ -24,12 +24,8 @@ export default {
     };
   },
   methods: {
-    doSomething(item) {
-      // Do something with the selected item
-    },
-     doSomething2(item) {
-      // Do something with the selected item
-    },
+  
+  
   },
 };
 </script>
